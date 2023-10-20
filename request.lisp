@@ -303,8 +303,7 @@ Content-Type header of the request or from
                (not (eq t (slot-value request 'raw-post-data))))
       (unless (or content-length
                   (input-chunking-p))
-        (log-message* :warning "Can't read request body because there's ~
-no Content-Length header and input chunking is off.")
+        (log-message* :warning "Can't read request body because there's no Content-Length header and input chunking is off.")
         (return-from maybe-read-post-parameters nil))
       (handler-case*
         (multiple-value-bind (type subtype charset)
@@ -314,8 +313,7 @@ no Content-Length header and input chunking is off.")
                                        (handler-case
                                            (make-external-format charset :eol-style :lf)
                                          (error ()
-                                           (hunchentoot-warn "Ignoring ~
-unknown character set ~A in request content type."
+                                           (hunchentoot-warn "Ignoring unknown character set ~A in request content type."
                                                  charset))))
                                        *hunchentoot-default-external-format*)))
             (setf (slot-value request 'post-parameters)

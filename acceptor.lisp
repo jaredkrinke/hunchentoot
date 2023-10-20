@@ -477,8 +477,7 @@ This is supposed to force a check of ACCEPTOR-SHUTDOWN-P."
                                ;; turn chunking on before we read the request body
                                (setf *hunchentoot-stream* (make-chunked-stream *hunchentoot-stream*)
                                      (chunked-stream-input-chunking-p *hunchentoot-stream*) t))
-                              (t (hunchentoot-error "Client tried to use ~
-chunked encoding, but acceptor is configured to not use it.")))))
+                              (t (hunchentoot-error "Client tried to use chunked encoding, but acceptor is configured to not use it.")))))
                     (with-acceptor-request-count-incremented (*acceptor*)
                       (process-request (acceptor-make-request *acceptor* socket
                                                               :headers-in headers-in
@@ -525,8 +524,7 @@ destination determined by (ACCEPTOR-ACCESS-LOG-DESTINATION ACCEPTOR)
 Apache log analysis tools.)"
 
   (with-log-stream (stream (acceptor-access-log-destination acceptor) *access-log-lock*)
-    (format stream "~:[-~@[ (~A)~]~;~:*~A~@[ (~A)~]~] ~:[-~;~:*~A~] [~A] \"~A ~A~@[?~A~] ~
-                    ~A\" ~D ~:[-~;~:*~D~] \"~:[-~;~:*~A~]\" \"~:[-~;~:*~A~]\"~%"
+    (format stream "~:[-~@[ (~A)~]~;~:*~A~@[ (~A)~]~] ~:[-~;~:*~A~] [~A] \"~A ~A~@[?~A~] ~A\" ~D ~:[-~;~:*~D~] \"~:[-~;~:*~A~]\" \"~:[-~;~:*~A~]\"~%"
             (remote-addr*)
             (header-in* :x-forwarded-for)
             (authorization)
@@ -723,9 +721,7 @@ handler."
         #.+http-moved-permanently+)
        (cooked-message "The document has moved <a href='~A'>here</a>" (header-out :location)))
       ((#.+http-authorization-required+)
-       (cooked-message "The server could not verify that you are authorized to access the document requested.  ~
-                        Either you supplied the wrong credentials \(e.g., bad password), or your browser doesn't ~
-                        understand how to supply the credentials required."))
+       (cooked-message "The server could not verify that you are authorized to access the document requested.  Either you supplied the wrong credentials \(e.g., bad password), or your browser doesn't understand how to supply the credentials required."))
       ((#.+http-forbidden+)
        (cooked-message "You don't have permission to access ~A on this server."
                        (script-name *request*)))
